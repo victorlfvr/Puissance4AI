@@ -69,41 +69,47 @@ def jouer_joueur_vs_ia(choix_ia):
 
 def jouer_ia_vs_ia(choix_ia1, choix_ia2):
     jeu = Puissance4()
-    profondeur = 4 # profondeur pour les IA
-
     print(f"\n--- IA vs IA ---")
-    print(f"IA 1 (X) = ", end="")
-    if choix_ia1 == "1":
-        print("Minimax")
-    elif choix_ia1 == "2":
-        print("Alpha-Beta")
-    elif choix_ia1 == "3":
-        print("MCTS")
 
-    print(f"IA 2 (O) = ", end="")
-    if choix_ia2 == "1":
-        print("Minimax")
-    elif choix_ia2 == "2":
-        print("Alpha-Beta")
+    # PARAMÈTRES IA 1 (X)
+    if choix_ia1 == "1" or choix_ia1 == "2":
+        profondeur_ia1 = int(input("Profondeur pour IA 1 (X) : "))
+        budget_ia1 = None
+    elif choix_ia1 == "3":
+        budget_ia1 = int(input("Budget de simulations pour MCTS IA 1 (X) : "))
+        profondeur_ia1 = None
+
+    # PARAMÈTRES IA 2 (O)
+    if choix_ia2 == "1" or choix_ia2 == "2":
+        profondeur_ia2 = int(input("Profondeur pour IA 2 (O) : "))
+        budget_ia2 = None
     elif choix_ia2 == "3":
-        print("MCTS")
+        budget_ia2 = int(input("Budget de simulations pour MCTS IA 2 (O) : "))
+        profondeur_ia2 = None
+
+    print(f"IA 1 (X) = {'Minimax' if choix_ia1=='1' else 'Alpha-Beta' if choix_ia1=='2' else 'MCTS'}")
+    print(f"IA 2 (O) = {'Minimax' if choix_ia2=='1' else 'Alpha-Beta' if choix_ia2=='2' else 'MCTS'}")
 
     while True:
         jeu.afficher_grille()
         print(f"[IA {jeu.joueur_actuel}] réfléchit...")
 
-        # IA 1 = X, IA 2 = O
         if jeu.joueur_actuel == 'X':
             choix = choix_ia1
+            profondeur = profondeur_ia1
+            budget = budget_ia1
         else:
             choix = choix_ia2
+            profondeur = profondeur_ia2
+            budget = budget_ia2
 
         if choix == "1":
             col = minimax(jeu, max_profondeur=profondeur)
         elif choix == "2":
             col = alpha_beta(jeu, max_profondeur=profondeur)
         elif choix == "3":
-            col = mcts(jeu, budget=1000)
+            col, infos = mcts(jeu, budget=budget, collect_infos=True)
+            print("[DEBUG MCTS] Infos arbre:", infos)
         else:
             print("IA non reconnue.")
             break

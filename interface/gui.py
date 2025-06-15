@@ -83,6 +83,7 @@ class Puissance4GUI:
 
     def clic_souris(self, event):
         if self.mode not in ['PVP', 'PvIA']:
+            self.window.update()
             messagebox.showinfo("Non disponible", "Ce mode de jeu n'est pas encore disponible.")
             return
 
@@ -90,11 +91,13 @@ class Puissance4GUI:
         if self.jeu.jouer(col):
             self.dessiner_grille()
             if self.jeu.est_victoire():
+                self.window.update()
                 messagebox.showinfo("Victoire", f"Le joueur {self.jeu.joueur_actuel} a gagné !")
                 self.window.destroy()
                 self.lancer()
                 return
             elif self.jeu.est_pleine():
+                self.window.update()
                 messagebox.showinfo("Match nul", "Le plateau est plein. Match nul !")
                 self.window.destroy()
                 self.lancer()
@@ -118,11 +121,13 @@ class Puissance4GUI:
         if self.jeu.jouer(col):
             self.dessiner_grille()
             if self.jeu.est_victoire():
+                self.window.update()
                 messagebox.showinfo("Victoire", f"L'IA a gagné !")
                 self.window.destroy()
                 self.lancer()
                 return
             elif self.jeu.est_pleine():
+                self.window.update()
                 messagebox.showinfo("Match nul", "Le plateau est plein. Match nul !")
                 self.window.destroy()
                 self.lancer()
@@ -151,11 +156,13 @@ class Puissance4GUI:
         if self.jeu.jouer(col):
             self.dessiner_grille()
             if self.jeu.est_victoire():
+                self.window.update()
                 messagebox.showinfo("Victoire", f"L'IA {self.jeu.joueur_actuel} a gagné !")
                 self.window.destroy()
                 self.lancer()
                 return
             elif self.jeu.est_pleine():
+                self.window.update()
                 messagebox.showinfo("Match nul", "Le plateau est plein. Match nul !")
                 self.window.destroy()
                 self.lancer()
